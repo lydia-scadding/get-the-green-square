@@ -8,9 +8,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :email, :password, presence: true
-  validates :gh_username, presence: true, if: :username_exists?
+  validates :gh_username, presence: true, if: :valid_gh_username?
 
-  def username_exists?
+  def valid_gh_username?
     url = "https://api.github.com/users/#{gh_username}"
     data = JSON.parse(URI.open(url).read)
     errors.add(:gh_username, "must be a valid GitHub username") unless data["login"]

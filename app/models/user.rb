@@ -20,7 +20,7 @@ class User < ApplicationRecord
   def work_done
     url = "https://api.github.com/users/lydia-scadding/events"
     data = JSON.parse(URI.open(url).read)
-    today = data.select { |event| event["type"] == 'PushEvent' && event["created_at"].to_datetime > Date.today }
-    today.count
+    pushes_today = data.select { |event| event["type"] == 'PushEvent' && event["created_at"].to_datetime > Date.today }
+    pushes_today.count
   end
 end

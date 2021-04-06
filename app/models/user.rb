@@ -1,5 +1,6 @@
 require 'json'
 require 'open-uri'
+require 'active_support/all'
 
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
@@ -14,5 +15,12 @@ class User < ApplicationRecord
     url = "https://api.github.com/users/#{gh_username}"
     data = JSON.parse(URI.open(url).read)
     errors.add(:gh_username, "must be a valid GitHub username") unless data["login"]
+  end
+
+  def work_done
+    url = "https://api.github.com/users/lydia-scadding/events"
+    data = JSON.parse(URI.open(url).read)
+    today = data.select { |event| event["type"] == 'PushEvent' && event["created_at"].to_datetime > Date.today }
+    today.count
   end
 end

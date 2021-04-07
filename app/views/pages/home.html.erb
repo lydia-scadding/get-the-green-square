@@ -1,7 +1,7 @@
 <div class="container my-3">
   <h1>Get the green square</h1>
-  <h2>Pushes so far today:</h2>
-  <div class="text-center">
+  <h2 class="text-center mt-5">Pushes so far today:</h2>
+  <div id="push-count" data-count="<%= @push_count %>">
     <h1><%= @push_count %></h1>
   </div>
   <% if @push_count > 0 %>

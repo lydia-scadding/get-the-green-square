@@ -1,1 +1,14 @@
 // Specific CSS for your home-page
+#push-count {
+  border: 2px solid grey;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 64px;
+  margin: auto;
+  h1 {
+    margin-bottom: 0;
+  }
+}

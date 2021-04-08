@@ -1,12 +1,21 @@
-const colours = {
+const colours = [ 'rgb(155,233,168)',
+                  'rgb(93,197,100)',
+                  'rgb(75,162,79)',
+                  'rgb(49,111,58)'
+]
 
-  '1-6': rgb(155,233,168),
-  '7-13': rgb(93,197,100),
-  '14-20': rgb(75,162,79),
-  '20-50': rgb(49,111,58)
+const counter = document.getElementById('push-count');
 
+const setColour = () => {
+  const dataCount = parseInt(counter.dataset.count,10);
+  console.log(dataCount);
+  const idx = dataCount / 7 > 2 ? 3 : dataCount / 7;
+  console.log(Math.floor(idx));
+  counter.style.backgroundColor = colours[Math.floor(idx)];
 }
 
-const counterDiv = document.getElementById('push-count');
+export { setColour };
 
-let dataCount = parseInt(counterDiv.attr('data-count'),10);
+
+
+

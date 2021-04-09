@@ -10,9 +10,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :gh_username, presence: true
+
   validate :valid_gh_username?
 
-  before_create :set_image
+  after_create :set_img_url
 
   def work_done
     url = "#{BASE_URL}#{gh_username}/events"
@@ -28,12 +29,12 @@ class User < ApplicationRecord
     req = Net::HTTP.new(url.host, url.port)
     req.use_ssl = true
     res = req.request_head(url.path)
-    if res.code == '404'
-      errors.add(:gh_username, "must be a valid GitHub username")
-    end
+    errors.add(:gh_username, "must be a valid GitHub username") if res.code == '404'
   end
 
-  def set_image
-    #TODO
+  def set_img_url
+    url = "#{BASE_URL}#{gh_username}"
+    data = JSON.parse(URI.open(url).read)
+    update_attributes(img_url: data["avatar_url"])
   end
 end

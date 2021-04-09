@@ -8,10 +8,15 @@ const counter = document.getElementById('push-count');
 
 const setColour = () => {
   const dataCount = parseInt(counter.dataset.count,10);
-  console.log(dataCount);
-  const idx = dataCount / 7 > 2 ? 3 : dataCount / 7;
-  console.log(Math.floor(idx));
-  counter.style.backgroundColor = colours[Math.floor(idx)];
+  if (dataCount == 0) {
+    counter.style.backgroundColor = 'rgb(235,237,240)';
+    counter.style.borderColor = grey;
+  }
+  else {
+    const idx = (dataCount / 7) >= 3 ? 3 : Math.floor(dataCount / 7);
+    counter.style.backgroundColor = colours[idx];
+    counter.style.borderColor = colours[idx];
+  }
 }
 
 export { setColour };

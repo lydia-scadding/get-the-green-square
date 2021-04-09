@@ -1,5 +1,6 @@
 require 'json'
 require 'open-uri'
+require 'net/http'
 require 'active_support/all'
 
 class User < ApplicationRecord
@@ -26,6 +27,13 @@ class User < ApplicationRecord
 
   def valid_gh_username?
     #TODO
+    # url = URI.parse("#{BASE_URL}#{gh_username}")
+    # req = Net::HTTP.new(url.host, url.port)
+    # req.use_ssl = true
+    # res = req.request_head(url.path)
+    # if res.code == '404'
+    #   errors.add(:gh_username, "must be a valid GitHub username")
+    # end
     # url = "#{BASE_URL}#{gh_username}"
     # data = JSON.parse(URI.open(url).read)
     # errors.add(:gh_username, "must be a valid GitHub username") unless data["login"]

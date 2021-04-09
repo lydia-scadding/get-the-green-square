@@ -1,5 +1,4 @@
 require 'json'
-require 'open-uri'
 require 'net/http'
 require 'active_support/all'
 
@@ -10,9 +9,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :email, :password, :gh_username, presence: true
-
-  after_validation :valid_gh_username?
+  validates :gh_username, presence: true
+  validate :valid_gh_username?
 
   before_create :set_image
 
@@ -26,17 +24,13 @@ class User < ApplicationRecord
   private
 
   def valid_gh_username?
-    #TODO
-    # url = URI.parse("#{BASE_URL}#{gh_username}")
-    # req = Net::HTTP.new(url.host, url.port)
-    # req.use_ssl = true
-    # res = req.request_head(url.path)
-    # if res.code == '404'
-    #   errors.add(:gh_username, "must be a valid GitHub username")
-    # end
-    # url = "#{BASE_URL}#{gh_username}"
-    # data = JSON.parse(URI.open(url).read)
-    # errors.add(:gh_username, "must be a valid GitHub username") unless data["login"]
+    url = URI.parse("#{BASE_URL}#{gh_username}")
+    req = Net::HTTP.new(url.host, url.port)
+    req.use_ssl = true
+    res = req.request_head(url.path)
+    if res.code == '404'
+      errors.add(:gh_username, "must be a valid GitHub username")
+    end
   end
 
   def set_image

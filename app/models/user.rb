@@ -9,11 +9,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :email, :password, presence: true
+  validates :email, :password, :gh_username, presence: true
 
-  validates :gh_username, presence: true, if: :valid_gh_username?
+  after_validation :valid_gh_username?
 
-  after_validation :set_image
+  before_create :set_image
 
   def work_done
     url = "#{BASE_URL}#{gh_username}/events"
@@ -25,9 +25,10 @@ class User < ApplicationRecord
   private
 
   def valid_gh_username?
-    url = "#{BASE_URL}#{gh_username}"
-    data = JSON.parse(URI.open(url).read)
-    errors.add(:gh_username, "must be a valid GitHub username") unless data["login"]
+    #TODO
+    # url = "#{BASE_URL}#{gh_username}"
+    # data = JSON.parse(URI.open(url).read)
+    # errors.add(:gh_username, "must be a valid GitHub username") unless data["login"]
   end
 
   def set_image

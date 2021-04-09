@@ -1,6 +1,7 @@
 // Specific CSS for your home-page
 #push-count {
-  border: 2px solid grey;
+  outline: 3px solid rgba(0, 0, 0, 0.2);
+  outline-offset: -3px;
   border-radius: 4px;
   display: flex;
   justify-content: center;

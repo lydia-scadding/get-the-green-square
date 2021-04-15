@@ -1,6 +1,7 @@
 require 'json'
 require 'net/http'
 require 'active_support/all'
+require 'open-uri'
 
 class User < ApplicationRecord
   BASE_URL = "https://api.github.com/users/"
